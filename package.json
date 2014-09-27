@@ -1,0 +1,14 @@
+{
+  "name": "skill-graph",
+  "version": "0.0.0",
+  "description": "Skill Graph Generator",
+  "repository": {
+    "type": "git",
+    "url": "git@git.ustclug.org:izgzhen/skill-graph.git"
+  },
+  "author": "Zhen Zhang",
+  "license": "MIT",
+  "dependencies": {
+    "markdown": "^0.5.0"
+  }
+}
