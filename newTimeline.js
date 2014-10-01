@@ -24,7 +24,7 @@ items.forEach(function (item){
 	});
 });
 
-console.log(segmentsDisTable);
+render(geoTable);
 
 function update(segmentsDisTable, width, start, end){
 	var validSpacesAll = [];
@@ -39,7 +39,7 @@ function update(segmentsDisTable, width, start, end){
 	})
 
 	if(isAllUntouched)
-		return insert(segmentsDisTable, [0, width - 1], start, end);
+		return insert(segmentsDisTable, [0, width], start, end);
 
 	var validSpaces = analyzeValidSpace(validSpacesAll);
 
