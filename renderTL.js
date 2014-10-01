@@ -4,6 +4,7 @@ var j2x = require('./j2x.js');
 module.exports = function (itemsInfo) {
 	var xScale = 5;
 	var yScale = 50;
+	var xDisp = 50;
 
 	var colors = ['red', 'blue', 'green', 'yellow'];
 
@@ -44,12 +45,12 @@ module.exports = function (itemsInfo) {
 	var hLine = function (x, y){
 		this.name = 'line';
 		this.attrs = {
-			x1 : 0,
+			x1 : xDisp,
 			x2 : x,
 			y1 : y,
 			y2 : y,
 			fill : 'transparent',
-			stroke : 'orange',
+			stroke : '#ddd',
 			strokeWidth : 2
 		}
 	}
@@ -60,7 +61,7 @@ module.exports = function (itemsInfo) {
 	itemsInfo.forEach(function(item){
 		// [[Left, Top], [Right, Bottom]]
 
-		var x = item.geoInfo[0][0] * xScale;
+		var x = item.geoInfo[0][0] * xScale + xDisp;
 		var y = item.geoInfo[0][1] * yScale;
 		var width = (item.geoInfo[1][0] - item.geoInfo[0][0]) * xScale;
 		var height = (item.geoInfo[1][1] - item.geoInfo[0][1] + 1) * yScale;
@@ -80,7 +81,7 @@ module.exports = function (itemsInfo) {
 
 	var textNum = 2014 - 2002 + 1;
 	while(textNum--)
-		svg.children.push(new text(svgWidth, yScale * (textNum + 0.5), 2002 + textNum));
+		svg.children.push(new text(10, yScale * (textNum + 0.5), 2002 + textNum));
 
 	svg.children.push(new text(100, 100, "Hello world! This is Skill Graph -- Timeline"));
 
