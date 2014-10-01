@@ -3,6 +3,7 @@ var markdown = require( "markdown" ).markdown;
 
 module.exports = function(tree) {
 	console.log(markdown.toHTML(getContent(tree)));
+	fs.writeFile('treeInfo.json', JSON.stringify(tree, null, '  '));
 }
 
 function getContent(tree){

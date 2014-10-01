@@ -6,6 +6,8 @@ var current = 2014;
 
 var oldest = Math.min.apply(null, items.map(function (item){ return item.timeStamp[0]}));
 
+var Geo = [];
+
 var table = {
 	"startYear": -1,
 	"endYear": -1,
@@ -22,12 +24,13 @@ var table = {
 			// console.log(i);
 			if(this.segments[i]) {
 				var flag = false;
-				for(j=0; j< this.segments[j].length - 1; j++){
-					var interval = this.segments[i][i+1][0] - this.segments[i][i][1];
+				for(j=0; j< this.segments[i].length - 1; j++){
+					var interval = this.segments[i][j+1][0] - this.segments[i][j][1];
 
 					if(interval - 2 >= width){
-						newElement = [this.segments[i][i][1] + 1, this.segments[i][i][1] + 1 + width];
-						this.segments[i] = this.segments[i].slice(0, i+1).concat(newElement,this.segments[i].slice(i+1));
+						newElement = [this.segments[i][j][1] + 1, this.segments[i][j][1] + 1 + width];
+						this.segments[i] = this.segments[i].slice(0, j+1).concat(newElement,this.segments[i].slice(j+1));
+
 						flag = true;
 						break;
 					}
@@ -41,10 +44,25 @@ var table = {
 			}
 			else
 				this.segments[i] = [newElement];
+
+			getValidSpaces(1, [[0,1], [3,4], [5,10], [13, 23]]);
 		}
 	}
 }
 
+
+function getValidSpaces(width, segments){
+	var validSpaces = [];
+	for(current = 0; current < segments.length - 1; current ++){
+		var interval = segments[current+1][0] - segments[current][1];
+
+		if(interval - 2 >= width){
+			validSpaces.push([segments[current][1] + 1, segments[current][1] + 1 + width]);
+		}
+	}
+
+	console.log(validSpaces);
+}
 
 table.startYear = oldest;
 table.endYear = current;
