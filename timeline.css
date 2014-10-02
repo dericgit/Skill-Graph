@@ -1,0 +1,12 @@
+.intro {
+	text-align: center;
+}
+
+#svg {
+	margin-left: 200px;
+	margin-right: 200px;
+	padding-left : 50px;
+	padding-right: 50px;
+	padding-top: 50px;
+	border-style: dashed;
+}

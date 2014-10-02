@@ -1,13 +1,15 @@
 var writeFile = require('fs').writeFile;
 var j2x = require('./j2x.js');
 
+
+
 module.exports = function (itemsInfo) {
 	var xScale = 5;
 	var yScale = 50;
 	var xDisp = 50;
 
-	var colors = ['red', 'blue', 'green', 'yellow'];
-
+	// var colors = ['red', 'blue', 'green', 'yellow'];
+	var colors = ['#99FF66', '#66CCFF', '#FFCC66', '#CCCCFF']
 	var svg = {
 		name : 'svg',
 		attrs : 
@@ -36,7 +38,8 @@ module.exports = function (itemsInfo) {
 		this.name = 'text';
 		this.attrs = {
 			x : x,
-			y : y
+			y : y,
+			fontFamily : "sans-serif"
 		};
 		this.text = text;
 	}
@@ -67,7 +70,7 @@ module.exports = function (itemsInfo) {
 		var height = (item.geoInfo[1][1] - item.geoInfo[0][1] + 1) * yScale;
 
 		svg.children.push(new rect(x, y, width, height, colors[colorCode]));
-		svg.children.push(new text(x + width / 4, y + height/2, item.name));
+		svg.children.push(new text(x + width / 8, y + height/2, item.name));
 
 		colorCode = (colorCode + 1) % 4;
 		svgHeight = Math.max(y + height, svgHeight);
@@ -77,13 +80,11 @@ module.exports = function (itemsInfo) {
 
 	var linesNum = 2014 - 2002 + 1;
 	while(linesNum--)
-		svg.children.push(new hLine(svgWidth, yScale * (linesNum + 1)));
+		svg.children.unshift(new hLine(svgWidth, yScale * (linesNum + 1)));
 
 	var textNum = 2014 - 2002 + 1;
 	while(textNum--)
 		svg.children.push(new text(10, yScale * (textNum + 0.5), 2002 + textNum));
-
-	svg.children.push(new text(100, 100, "Hello world! This is Skill Graph -- Timeline"));
 
 	svg.attrs.width = svgWidth + 100;
 	svg.attrs.height = svgHeight + 100;
