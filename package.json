@@ -1,10 +1,10 @@
 {
   "name": "skill-graph",
-  "version": "0.0.0",
-  "description": "Skill Graph Generator",
+  "version": "0.0.1",
+  "description": "Skill Graph Generator and Template, including a timeline and a spanning tree",
   "repository": {
     "type": "git",
-    "url": "git@git.ustclug.org:izgzhen/skill-graph.git"
+    "url": "git@github.com:izgzhen/Skill-Graph.git"
   },
   "author": "Zhen Zhang",
   "license": "MIT",

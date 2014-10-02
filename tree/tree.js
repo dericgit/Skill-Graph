@@ -1,6 +1,6 @@
 var buildTree = require('./treeLib.js');
-var categories = require('./skilltree.json').categories;
-var items = require('./skilltree.json').items;
+var categories = require('../skillInfo.json').categories;
+var items = require('./skillInfo.json').items;
 var render = require('./renderTree.js')
 
 var tree = buildTree({

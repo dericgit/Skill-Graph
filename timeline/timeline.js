@@ -1,4 +1,4 @@
-var items = require('./skilltree.json').items;
+var items = require('../skillInfo.json').items;
 var render = require('./renderTL.js');
 
 var currentYear = 2014;
@@ -49,11 +49,11 @@ function update(segmentsDisTable, width, start, end){
 				return (space[1] - space[0] >= width);
 			})
 			.map(function (space){
-				return [space[0], space[0] + width];
+				return [space[0], space[0] + width];	// Shrinking
 			});
 
 	var validSpace = (!validSpaces || validSpaces.length == 0) ?
-		findCommonTail(segmentsDisTable, start, end, width) :
+		findCommonTail(segmentsDisTable, start, end, width) : // No middle space, put to tail
 		validSpaces[0];
 
 	return insert(segmentsDisTable, validSpace, start, end);
@@ -80,10 +80,10 @@ function analyzeValidSpace(validSpacesAll){
 	var validPoints = [];
 
 	validSpacesAll = validSpacesAll.filter(function(spaces){
-		return spaces.length == 0 || spaces[0][0] != -1;
-	})
+		return spaces.length == 0 || spaces[0][0] != -1;	// This is a little cryptic. The length 0 will  
+	})														// indicate `getScanning` to return a empty array
 
-	var points = getScanning(validSpacesAll[0]);
+	var points = getPoints(validSpacesAll[0]);
 
 	for(i in points){
 		var isShared = validSpacesAll.some(function (validSpaces){
@@ -94,17 +94,13 @@ function analyzeValidSpace(validSpacesAll){
 			validPoints.push(points[i]);
 	}
 
-	return concat(validPoints);
+	return concatPoints(validPoints);
 }
 
-function deleteElem(arr, index){
-	return arr.slice(0, index).concat(arr.slice(index + 1));
-}
-
-function concat(points){
+function concatPoints(points){
 	var spaces = [];
 
-	points.push(-1);
+	points.push(-1);	// For the convenience of boundary processing
 
 	var start = 0;
 	while(start < points.length - 1){
@@ -126,7 +122,7 @@ function findPoint(spaces, point){
 	})
 }
 
-function getScanning(spaces){
+function getPoints(spaces){
 	var points = [];
 
 	for(var i in spaces)
@@ -141,7 +137,6 @@ function findCommonTail(segmentsDisTable, startYear, endYear, width){
 
 	for(var i = startYear; i <= endYear; i++)
 		if(segmentsDisTable[i]) {
-
 			var seg = segmentsDisTable[i];
 			if(max < seg[seg.length-1][1])
 				max = seg[seg.length-1][1];
@@ -161,6 +156,7 @@ function insert(segmentsDisTable, validSpace, startYear, endYear){
 		var seg = segmentsDisTable[i];
 		var pos = -1;
 
+		// Find the position to insert
 		if(seg[0][0] > validSpace[1])
 			pos = 0;
 		else 
@@ -170,6 +166,7 @@ function insert(segmentsDisTable, validSpace, startYear, endYear){
 					break;
 				}
 
+		// If not found, push to tail
 		pos == -1 ?
 			seg.push(validSpace):
 			seg = seg.splice(0, pos, [validSpace]);
